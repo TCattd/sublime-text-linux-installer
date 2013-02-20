@@ -4,7 +4,7 @@ sublime-text-3-bash-installer
 Sublime Text 3 Ubuntu/Linux Bash Installer
 
 A *really* simple bash installer for Sublime Text 3.
-The bash script will check www.sublimetext.com/3, auto-grab the lastest build url, download, unpack, install and create a .desktop file... all in one step.
+The bash script will check www.sublimetext.com/3, auto-grab the lastest build url depending your system (x86 or x86_64), download the tarball, unpack it, install it and create a .desktop file... all in one step.
 
 ## USAGE:
 ```
