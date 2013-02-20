@@ -11,6 +11,7 @@ So, any comment, improvement or help is welcome.
 
 ## USAGE:
 Download a copy of st3install to any location (your home folder, for example).
+
 Then from a terminal run:
 ```
 sudo bash st3install
