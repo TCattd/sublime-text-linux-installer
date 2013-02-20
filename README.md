@@ -10,6 +10,8 @@ It's a little ugly, but... it works. I'm not any bash-scripting master on Linux.
 So, any comment, improvement or help is welcome.
 
 ## USAGE:
+Download a copy of st3install to any location (your home folder, for example).
+Then from a terminal run:
 ```
 sudo bash st3install
 ```
