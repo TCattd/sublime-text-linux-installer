@@ -14,6 +14,8 @@ sudo bash st3install
 This can be used to upgrade and existing Sublime Text 3 installation made by the same script.
 No more upgrade worries ;)
 
+Tested on Ubuntu/Xubuntu 12.10
+
 ## License
 
 All source code is released under the open source [WTFPL license](http://en.wikipedia.org/wiki/WTFPL).
