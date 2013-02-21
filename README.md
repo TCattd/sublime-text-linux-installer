@@ -10,15 +10,17 @@ So, any comment, improvement or help is welcome.
 ## USAGE:
 Download a copy of st2install (for Sublime Text 2) or st3install (for Sublime Text 3) to any location (your home folder, for example).
 
-Then from a terminal run:
-```
-sudo bash st2install
-```
-or
-
+Then from a terminal run...
+For Sublime Text 3:
 ```
 sudo bash st3install
 ```
+or
+For Sublime Text 2:
+```
+sudo bash st2install
+```
+
 
 You can install both at the same time, they can live together without problems ;)
 
