@@ -27,6 +27,7 @@ sudo bash st2install
 You can install both at the same time, they can live together without problems ;)
 
 This can be used to upgrade and existing Sublime Text 2 or 3 installation made by the same script.
+Just re-run the same install process. Sublime Text (2 or 3) will be upgraded automatically to lastest version on sublime's web, and none of your settings will be lost (there're located on your home folder, and this installer will not touch those folders).
 No more upgrade worries ;)
 
 Tested on Ubuntu/Xubuntu 12.10
