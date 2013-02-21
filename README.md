@@ -20,6 +20,8 @@ or
 sudo bash st3install
 ```
 
+You can install both at the same time, they can live together without problems ;)
+
 This can be used to upgrade and existing Sublime Text 2 or 3 installation made by the same script.
 No more upgrade worries ;)
 
