@@ -32,6 +32,8 @@ No more upgrade worries ;)
 
 Tested on Ubuntu/Xubuntu 12.10
 
+You can comment about this script on: http://www.sublimetext.com/forum/viewtopic.php?f=5&t=11231
+
 ## License
 
 All source code is released under the open source [WTFPL license](http://en.wikipedia.org/wiki/WTFPL).
