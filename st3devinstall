@@ -1,0 +1,128 @@
+#!/bin/bash
+
+#Sublime Text 3 DEV Ubuntu/Linux Bash Installer
+#Created by esteban@attitude.cl
+#Licensed under WTFPL (Do What The Fuck You Want To Public License)
+#http://en.wikipedia.org/wiki/WTFPL
+
+# DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+#                   Version 2, December 2004
+#
+#Copyright (C) 2004 Sam Hocevar <sam@hocevar.net>
+#
+#Everyone is permitted to copy and distribute verbatim or modified
+#copies of this license document, and changing it is allowed as long
+#as the name is changed.
+#
+#           DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+#  TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+#
+# 0. You just DO WHAT THE FUCK YOU WANT TO.
+
+#Usage:
+#	sudo bash st3devinstall
+#You can upgrade an installation made by this same script, using this
+#very same script too ;)
+
+#Esta es la URL que buscaremos en la pagina de descarga
+STDOWNLOADURLLIKE="http://c758482.r82.cf2.rackcdn.com/sublime_text_3_build_"
+
+#Busquemos la ultima version de Sublime Text 3 en la web directamente
+STURLTOCHECK="`wget -qO- http://www.sublimetext.com/3dev`"
+
+echo "Sublime Text 3 Batch Installer/Upgrader (esteban@attitude.cl)"
+
+#URL distinta segun sistema 64 o 32 bits
+if [ "i686" = `uname -m` ]; then
+	#http://c758482.r82.cf2.rackcdn.com/sublime_text_3_build_3018_x32.tar.bz2
+	echo "System x86 detected"
+	#URLS="`grep -Po '(?<=href=").*?(?=">)' <<<"$STURLTOCHECK"`"
+	URL="`grep -Po '(?<=href="http://c758482.r82.cf2.rackcdn.com/sublime_text_3_build_)(.*?)(\w+x32.tar.bz2)(?=">)' <<<"$STURLTOCHECK"`"
+elif [ "x86_64" = `uname -m` ]; then
+	#http://c758482.r82.cf2.rackcdn.com/sublime_text_3_build_3018_x64.tar.bz2
+	echo "System x86_64 detected"
+	URL="`grep -Po '(?<=href="http://c758482.r82.cf2.rackcdn.com/sublime_text_3_build_)(.*?)(\w+x64.tar.bz2)(?=">)' <<<"$STURLTOCHECK"`"
+fi
+
+#El nombre del archivo y la URL completa, la necesitamos para despues
+THEFILE="sublime_text_3_build_$URL"
+THEDOWNLOADURL="$STDOWNLOADURLLIKE$URL"
+
+echo "I will download and install $THEDOWNLOADURL for you :)"
+
+#Instalamos Sublime Text 3
+echo "Creating temp location on /var/cache/..."
+mkdir -p /var/cache/sublime-text-3
+cd /var/cache/sublime-text-3
+
+#A la flash-installer
+APT_PROXIES=$(apt-config shell http_proxy Acquire::http::Proxy https_proxy Acquire::https::Proxy ftp_proxy Acquire::ftp::Proxy)
+if [ -n "$APT_PROXIES" ]; then
+	eval export $APT_PROXIES
+fi
+
+#Descargamos
+echo "Downloading file to temp location..."
+#http://unix.stackexchange.com/questions/37507/what-does-do-here
+:> wgetrc
+echo "noclobber = off" >> wgetrc
+echo "dir_prefix = ." >> wgetrc
+echo "dirstruct = off" >> wgetrc
+echo "verbose = on" >> wgetrc
+echo "progress = bar:default" >> wgetrc
+echo "tries = 3" >> wgetrc
+WGETRC=wgetrc wget --continue -O "$THEFILE" "$THEDOWNLOADURL" \
+	|| echo "Download failed."
+	rm -f wgetrc
+echo "Download completed."
+
+echo "Unpacking files on temp location..."
+tar xvf "$THEFILE" || echo "Cannot unpack downloaded file."
+
+echo "Installing Sublime Text 3 into /opt/sublime_text_3/"
+mkdir -p /opt/sublime_text_3/
+cp -rf "/var/cache/sublime-text-3/sublime_text_3/"* /opt/sublime_text_3/
+
+echo "Creating symlinks to /usr/bin/sublime_text"
+ln -sf /opt/sublime_text_3/sublime_text /usr/bin/sublime_text
+ln -sf /opt/sublime_text_3/sublime_text /usr/bin/sublime-text-3
+
+echo "Creating symlinks for icons on /usr/share/icons/hicolor/..."
+ln -sf /opt/sublime_text_3/Icon/128x128/sublime-text.png /usr/share/icons/hicolor/128x128/apps/sublime-text-3.png
+ln -sf /opt/sublime_text_3/Icon/256x256/sublime-text.png /usr/share/icons/hicolor/256x256/apps/sublime-text-3.png
+gtk-update-icon-cache /usr/share/icons/hicolor
+
+echo "Cleaning up temp unpacked files..."
+rm -rf "/var/cache/sublime-text-3/sublime_text_3/"
+rm -rf "/var/cache/sublime-text-3/"*.bz2
+
+#Creando archivo .desktop
+echo "Creating .desktop file (for easy launch and associate to Sublime Text 3)..."
+echo "[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Sublime Text 3 DEV
+GenericName=Text Editor
+Comment=Sophisticated text editor for code, markup and prose
+Exec=/opt/sublime_text_3/sublime_text %F
+Terminal=false
+MimeType=text/plain;text/x-chdr;text/x-csrc;text/x-c++hdr;text/x-c++src;text/x-java;text/x-dsrc;text/x-pascal;text/x-perl;text/x-python;application/x-php;application/x-httpd-php3;application/x-httpd-php4;application/x-httpd-php5;application/xml;text/html;text/css;text/x-sql;text/x-diff;x-directory/normal;inode/directory;
+Icon=sublime-text-3
+Categories=TextEditor;Development;
+StartupNotify=true
+Actions=Window;Document;
+
+[Desktop Action Window]
+Name=New Window
+Exec=/opt/sublime_text_3/sublime_text -n
+OnlyShowIn=Unity;
+
+[Desktop Action Document]
+Name=New File
+Exec=/opt/sublime_text_3/sublime_text --command new_file
+OnlyShowIn=Unity;" > /usr/share/applications/"Sublime Text 3.desktop"
+
+echo "That's all. Have fun Sublime Texting ;)"
+
+exit 0
+EOF
