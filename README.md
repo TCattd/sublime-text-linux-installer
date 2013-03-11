@@ -8,7 +8,7 @@ It's a little ugly, but... it works. I'm not any bash-scripting master on Linux.
 So, any comment, improvement or help is welcome.
 
 ## USAGE:
-Download a copy of st2install (for Sublime Text 2) or st3install (for Sublime Text 3) to any location (your home folder, for example).
+Download a copy of st2install (for Sublime Text 2) or st3install (for Sublime Text 3; st3devinstall for Sublime Text 3 DEV) to any location (your home folder, for example).
 
 Then from a terminal run...
 
@@ -16,6 +16,12 @@ For Sublime Text 3:
 ```
 sudo bash st3install
 ```
+
+Sublime Text 3 DEV
+```
+sudo bash st3devinstall
+```
+
 or
 
 For Sublime Text 2:
