@@ -37,7 +37,7 @@ if [ "i686" = `uname -m` ]; then
 	#http://c758482.r82.cf2.rackcdn.com/Sublime%20Text%202.0.1.tar.bz2
 	echo "System x86 detected"
 	#URLS="`grep -Po '(?<=href=").*?(?=">)' <<<"$STURLTOCHECK"`"
-	URL="`grep -Po '(?<=href="http://c758482.r82.cf2.rackcdn.com/Sublime Text )(.*?)(\w+.tar.bz2)(?=">)' <<<"$STURLTOCHECK"`"
+	URL="`grep -Po '(?<=href="http://c758482.r82.cf2.rackcdn.com/Sublime Text )(.*?)([^x64].tar.bz2)(?=">)' <<<"$STURLTOCHECK"`"
 elif [ "x86_64" = `uname -m` ]; then
 	#http://c758482.r82.cf2.rackcdn.com/Sublime%20Text%202.0.1%20x64.tar.bz2
 	echo "System x86_64 detected"
@@ -48,6 +48,8 @@ fi
 THEFILE="Sublime Text $URL"
 THEDOWNLOADURL="$STDOWNLOADURLLIKE$URL"
 
+echo $THEFILE
+echo $THEDOWNLOADURL
 echo "I will download and install $THEDOWNLOADURL for you :)"
 
 #Instalamos Sublime Text 2
