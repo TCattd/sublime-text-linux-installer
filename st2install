@@ -48,8 +48,6 @@ fi
 THEFILE="Sublime Text $URL"
 THEDOWNLOADURL="$STDOWNLOADURLLIKE$URL"
 
-echo $THEFILE
-echo $THEDOWNLOADURL
 echo "I will download and install $THEDOWNLOADURL for you :)"
 
 #Instalamos Sublime Text 2
