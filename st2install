@@ -86,6 +86,7 @@ cp -rf "/var/cache/sublime-text-2/Sublime Text 2/"* /opt/sublime_text_2/ #Carpet
 echo "Creating symlinks to /usr/bin/sublime_text"
 #ln -sf /opt/sublime_text_2/sublime_text /usr/bin/sublime_text #Usado en ST3
 ln -sf /opt/sublime_text_2/sublime_text /usr/bin/sublime-text-2
+ln -sf /opt/sublime_text_2/sublime_text /usr/bin/st2
 
 echo "Creating symlinks for icons on /usr/share/icons/hicolor/..."
 ln -sf /opt/sublime_text_2/Icon/128x128/sublime_text.png /usr/share/icons/hicolor/128x128/apps/sublime-text-2.png
@@ -104,7 +105,8 @@ Type=Application
 Name=Sublime Text 2
 GenericName=Text Editor
 Comment=Sophisticated text editor for code, markup and prose
-Exec=/opt/sublime_text_2/sublime_text %F
+#Exec=/opt/sublime_text_2/sublime_text %F
+Exec=sublime-text-2 %F
 Terminal=false
 MimeType=text/plain;text/x-chdr;text/x-csrc;text/x-c++hdr;text/x-c++src;text/x-java;text/x-dsrc;text/x-pascal;text/x-perl;text/x-python;application/x-php;application/x-httpd-php3;application/x-httpd-php4;application/x-httpd-php5;application/xml;text/html;text/css;text/x-sql;text/x-diff;x-directory/normal;inode/directory;
 Icon=sublime-text-2

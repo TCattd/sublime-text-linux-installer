@@ -86,6 +86,7 @@ cp -rf "/var/cache/sublime-text-3/sublime_text_3/"* /opt/sublime_text_3/
 echo "Creating symlinks to /usr/bin/sublime_text"
 ln -sf /opt/sublime_text_3/sublime_text /usr/bin/sublime_text
 ln -sf /opt/sublime_text_3/sublime_text /usr/bin/sublime-text-3
+ln -sf /opt/sublime_text_3/sublime_text /usr/bin/st3
 
 echo "Creating symlinks for icons on /usr/share/icons/hicolor/..."
 ln -sf /opt/sublime_text_3/Icon/128x128/sublime-text.png /usr/share/icons/hicolor/128x128/apps/sublime-text-3.png
@@ -104,7 +105,8 @@ Type=Application
 Name=Sublime Text 3
 GenericName=Text Editor
 Comment=Sophisticated text editor for code, markup and prose
-Exec=/opt/sublime_text_3/sublime_text %F
+#Exec=/opt/sublime_text_3/sublime_text %F
+Exec=sublime-text-3 %F
 Terminal=false
 MimeType=text/plain;text/x-chdr;text/x-csrc;text/x-c++hdr;text/x-c++src;text/x-java;text/x-dsrc;text/x-pascal;text/x-perl;text/x-python;application/x-php;application/x-httpd-php3;application/x-httpd-php4;application/x-httpd-php5;application/xml;text/html;text/css;text/x-sql;text/x-diff;x-directory/normal;inode/directory;
 Icon=sublime-text-3
