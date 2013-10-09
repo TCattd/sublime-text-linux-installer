@@ -14,19 +14,19 @@ Then from a terminal run...
 
 For Sublime Text 3:
 ```
-sudo bash st3install
+chmod +x ./st3install && sudo ./st3install
 ```
 
 Sublime Text 3 DEV
 ```
-sudo bash st3devinstall
+chmod +x ./st3installdev && sudo ./st3installdev
 ```
 
 or
 
 For Sublime Text 2:
 ```
-sudo bash st2install
+chmod +x ./st2install && sudo ./st2install
 ```
 
 
