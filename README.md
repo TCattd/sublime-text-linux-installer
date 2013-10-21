@@ -36,7 +36,7 @@ This can be used to upgrade and existing Sublime Text 2 or 3 installation made b
 Just re-run the same install process. Sublime Text (2 or 3) will be upgraded automatically to lastest version on sublime's web, and none of your settings will be lost (there're located on your home folder, and this installer will not touch those folders).
 No more upgrade worries ;)
 
-Tested on Ubuntu/Xubuntu 13.04 and Fedora 19
+Tested on Ubuntu/Xubuntu 13.04/13.10 and Fedora 19
 
 You can comment about this script on: http://www.sublimetext.com/forum/viewtopic.php?f=5&t=11231
 
