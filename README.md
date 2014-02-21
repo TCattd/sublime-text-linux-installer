@@ -3,6 +3,7 @@ Sublime Text 2 & 3 Linux Installer
 
 A *really* simple bash installer for Sublime Text 2 & 3, to deploy (install/upgrade) it on Linux.
 The script will check www.sublimetext.com/2 or /3, auto-grab the lastest build url depending your system (x86 or x86_64), download the tarball, unpack it, install it and create a .desktop file... all in one step.
+
 It also will autoinstall wbond's Package Control (https://sublime.wbond.net/) for you ;)
 
 It's a little ugly, but... it works. I'm not any bash-scripting master on Linux.
