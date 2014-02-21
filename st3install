@@ -20,7 +20,7 @@
 # 0. You just DO WHAT THE FUCK YOU WANT TO.
 
 #Usage:
-#	sudo bash st3install
+#	chmod +x ./st3install && sudo ./st3install
 #You can upgrade an installation made by this same script, using this
 #very same script too ;)
 
@@ -87,6 +87,8 @@ echo "Creating symlinks to /usr/bin/sublime_text"
 ln -sf /opt/sublime_text_3/sublime_text /usr/bin/sublime_text
 ln -sf /opt/sublime_text_3/sublime_text /usr/bin/sublime-text-3
 ln -sf /opt/sublime_text_3/sublime_text /usr/bin/st3
+ln -sf /opt/sublime_text_3/sublime_text /usr/bin/subl
+ln -sf /opt/sublime_text_3/sublime_text /usr/bin/sublime
 
 echo "Creating symlinks for icons on /usr/share/icons/hicolor/..."
 ln -sf /opt/sublime_text_3/Icon/128x128/sublime-text.png /usr/share/icons/hicolor/128x128/apps/sublime-text-3.png
@@ -123,6 +125,11 @@ OnlyShowIn=Unity;
 Name=New File
 Exec=/opt/sublime_text_3/sublime_text --command new_file
 OnlyShowIn=Unity;" > /usr/share/applications/"Sublime Text 3.desktop"
+
+#Instalar Package Control https://sublime.wbond.net/installation
+echo "Installing Package Control (check https://sublime.wbond.net/ for more awesomeness)..."
+mkdir -p "$HOME/.config/sublime-text-3/Installed Packages"
+wget  -O "$HOME/.config/sublime-text-3/Installed Packages/Package Control.sublime-package" "https://sublime.wbond.net/Package%20Control.sublime-package"
 
 echo "That's all. Have fun Sublime Texting ;)"
 
