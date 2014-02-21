@@ -7,7 +7,7 @@ The script will check www.sublimetext.com/2 or /3, auto-grab the lastest build u
 The script will also auto-install wbond's Package Control (https://sublime.wbond.net/) for you :)
 
 It's a little ugly, but... it works. I'm not any bash-scripting master on Linux.
-So, any comment, improvement or help is welcome.
+So, any comment, improvement or help is always welcome.
 
 ## USAGE:
 Download a copy of st2install (for Sublime Text 2) or st3install (for Sublime Text 3; st3devinstall for Sublime Text 3 DEV) to any location (your home folder, for example).
