@@ -44,4 +44,4 @@ You can comment about this script on: http://www.sublimetext.com/forum/viewtopic
 
 ## License
 
-All source code is released under the open source [WTFPL license](http://en.wikipedia.org/wiki/WTFPL).
+All source code is released under the open source [MIT license](http://choosealicense.com/licenses/mit/).
