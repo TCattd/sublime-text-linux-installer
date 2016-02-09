@@ -25,7 +25,7 @@
 #very same script too ;)
 
 #Esta es la URL que buscaremos en la pagina de descarga
-STDOWNLOADURLLIKE="http://c758482.r82.cf2.rackcdn.com/sublime_text_3_build_"
+STDOWNLOADURLLIKE="https://download.sublimetext.com/sublime_text_3_build_"
 
 #Busquemos la ultima version de Sublime Text 3 en la web directamente
 STURLTOCHECK="`wget -qO- http://www.sublimetext.com/3`"
@@ -40,11 +40,11 @@ if [ "i686" = `uname -m` ]; then
 	#http://c758482.r82.cf2.rackcdn.com/sublime_text_3_build_3000_x32.tar.bz2
 	echo -e "\e[7m*** System x86 detected.\e[0m"
 	#URLS="`grep -Po '(?<=href=").*?(?=">)' <<<"$STURLTOCHECK"`"
-	URL="`grep -Po '(?<=href="http://c758482.r82.cf2.rackcdn.com/sublime_text_3_build_)(.*?)(\w+x32.tar.bz2)(?=">)' <<<"$STURLTOCHECK"`"
+	URL="`grep -Po '(?<=href="https://download.sublimetext.com/sublime_text_3_build_)(.*?)(\w+x32.tar.bz2)(?=">)' <<<"$STURLTOCHECK"`"
 elif [ "x86_64" = `uname -m` ]; then
 	#http://c758482.r82.cf2.rackcdn.com/sublime_text_3_build_3000_x64.tar.bz2
 	echo -e "\e[7m*** System x86_64 detected.\e[0m"
-	URL="`grep -Po '(?<=href="http://c758482.r82.cf2.rackcdn.com/sublime_text_3_build_)(.*?)(\w+x64.tar.bz2)(?=">)' <<<"$STURLTOCHECK"`"
+	URL="`grep -Po '(?<=href="https://download.sublimetext.com/sublime_text_3_build_)(.*?)(\w+x64.tar.bz2)(?=">)' <<<"$STURLTOCHECK"`"
 fi
 
 #El nombre del archivo y la URL completa, la necesitamos para despues
