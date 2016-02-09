@@ -25,7 +25,7 @@
 #very same script too ;)
 
 #Esta es la URL que buscaremos en la pagina de descarga
-STDOWNLOADURLLIKE="http://c758482.r82.cf2.rackcdn.com/Sublime Text "
+STDOWNLOADURLLIKE="https://download.sublimetext.com/Sublime Text "
 
 #Busquemos la ultima version de Sublime Text 2 en la web directamente
 STURLTOCHECK="`wget -qO- http://www.sublimetext.com/2`"
@@ -40,11 +40,11 @@ if [ "i686" = `uname -m` ]; then
 	#http://c758482.r82.cf2.rackcdn.com/Sublime%20Text%202.0.1.tar.bz2
 	echo -e "\e[7m*** System x86 detected.\e[0m"
 	#URLS="`grep -Po '(?<=href=").*?(?=">)' <<<"$STURLTOCHECK"`"
-	URL="`grep -Po '(?<=href="http://c758482.r82.cf2.rackcdn.com/Sublime Text )(.*?)([^x64].tar.bz2)(?=">)' <<<"$STURLTOCHECK"`"
+	URL="`grep -Po '(?<=href="https://download.sublimetext.com/Sublime Text )(.*?)([^x64].tar.bz2)(?=">)' <<<"$STURLTOCHECK"`"
 elif [ "x86_64" = `uname -m` ]; then
 	#http://c758482.r82.cf2.rackcdn.com/Sublime%20Text%202.0.1%20x64.tar.bz2
 	echo -e "\e[7m*** System x86_64 detected.\e[0m"
-	URL="`grep -Po '(?<=href="http://c758482.r82.cf2.rackcdn.com/Sublime Text )(.*?)(\w+ x64.tar.bz2)(?=">)' <<<"$STURLTOCHECK"`"
+	URL="`grep -Po '(?<=href="https://download.sublimetext.com/Sublime Text )(.*?)(\w+ x64.tar.bz2)(?=">)' <<<"$STURLTOCHECK"`"
 fi
 
 #El nombre del archivo y la URL completa, la necesitamos para despues
