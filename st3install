@@ -28,23 +28,23 @@
 STDOWNLOADURLLIKE="https://download.sublimetext.com/sublime_text_3_build_"
 
 #Busquemos la ultima version de Sublime Text 3 en la web directamente
-STURLTOCHECK="`wget -qO- http://www.sublimetext.com/3`"
+STURLTOCHECK="$(wget -qO- http://www.sublimetext.com/3)"
 
 #Home del usuario (http://stackoverflow.com/questions/7358611/bash-get-users-home-directory-when-they-run-a-script-as-root)
-USER_HOME=$(getent passwd $SUDO_USER | cut -d: -f6)
+USER_HOME=$(getent passwd "$SUDO_USER" | cut -d: -f6)
 
 echo -e "\e[7m*** Sublime Text 3 Batch Installer/Upgrader (esteban@attitude.cl)\e[0m"
 
 #URL distinta segun sistema 64 o 32 bits
-if [ "i686" = `uname -m` ]; then
+if [ "i686" = "$(uname -m)" ]; then
 	#http://c758482.r82.cf2.rackcdn.com/sublime_text_3_build_3000_x32.tar.bz2
 	echo -e "\e[7m*** System x86 detected.\e[0m"
 	#URLS="`grep -Po '(?<=href=").*?(?=">)' <<<"$STURLTOCHECK"`"
-	URL="`grep -Po '(?<=href="https://download.sublimetext.com/sublime_text_3_build_)(.*?)(\w+x32.tar.bz2)(?=">)' <<<"$STURLTOCHECK"`"
-elif [ "x86_64" = `uname -m` ]; then
+	URL="$(grep -Po '(?<=href="https://download.sublimetext.com/sublime_text_3_build_)(.*?)(\w+x32.tar.bz2)(?=">)' <<<"$STURLTOCHECK")"
+elif [ "x86_64" = "$(uname -m)" ]; then
 	#http://c758482.r82.cf2.rackcdn.com/sublime_text_3_build_3000_x64.tar.bz2
 	echo -e "\e[7m*** System x86_64 detected.\e[0m"
-	URL="`grep -Po '(?<=href="https://download.sublimetext.com/sublime_text_3_build_)(.*?)(\w+x64.tar.bz2)(?=">)' <<<"$STURLTOCHECK"`"
+	URL="$(grep -Po '(?<=href="https://download.sublimetext.com/sublime_text_3_build_)(.*?)(\w+x64.tar.bz2)(?=">)' <<<"$STURLTOCHECK")"
 fi
 
 #El nombre del archivo y la URL completa, la necesitamos para despues
@@ -56,12 +56,12 @@ echo -e "\e[7m*** I will download and install $THEDOWNLOADURL for you :)\e[0m"
 #Instalamos Sublime Text 3
 echo -e "\e[7m*** Creating temp location on /var/cache/...\e[0m"
 mkdir -p /var/cache/sublime-text-3
-cd /var/cache/sublime-text-3
+cd /var/cache/sublime-text-3 || exit
 
 #A la flash-installer
 APT_PROXIES=$(apt-config shell http_proxy Acquire::http::Proxy https_proxy Acquire::https::Proxy ftp_proxy Acquire::ftp::Proxy)
 if [ -n "$APT_PROXIES" ]; then
-	eval export $APT_PROXIES
+	eval export "$APT_PROXIES"
 fi
 
 #Descargamos
@@ -133,12 +133,12 @@ OnlyShowIn=Unity;" > /usr/share/applications/"Sublime Text 3.desktop"
 #http://superuser.com/questions/93385/run-part-of-a-bash-script-as-a-different-user
 #http://superuser.com/questions/195781/sudo-is-there-a-command-to-check-if-i-have-sudo-and-or-how-much-time-is-left
 CAN_I_RUN_SUDO=$(sudo -n uptime 2>&1|grep "load"|wc -l)
-if [ ${CAN_I_RUN_SUDO} -gt 0 ]; then
+if [ "${CAN_I_RUN_SUDO}" -gt 0 ]; then
 	#Podemos correr sudo
 	#Instalar Package Control https://sublime.wbond.net/installation
 	echo -e "\e[7m*** Installing Package Control (check https://sublime.wbond.net/ for more awesomeness)...\e[0m"
-	sudo -u $SUDO_USER mkdir -p "$USER_HOME/.config/sublime-text-3/Installed Packages"
-	sudo -u $SUDO_USER wget -O "$USER_HOME/.config/sublime-text-3/Installed Packages/Package Control.sublime-package" "https://sublime.wbond.net/Package%20Control.sublime-package"
+	sudo -u "$SUDO_USER" mkdir -p "$USER_HOME/.config/sublime-text-3/Installed Packages"
+	sudo -u "$SUDO_USER" wget -O "$USER_HOME/.config/sublime-text-3/Installed Packages/Package Control.sublime-package" "https://sublime.wbond.net/Package%20Control.sublime-package"
 else
 	#No podemos correr sudo
 	echo ''
