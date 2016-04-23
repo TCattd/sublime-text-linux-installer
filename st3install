@@ -142,10 +142,10 @@ OnlyShowIn=Unity;" > /usr/share/applications/"Sublime Text 3.desktop"
 CAN_I_RUN_SUDO=$(sudo -n uptime 2>&1|grep "load"|wc -l)
 if [ "${CAN_I_RUN_SUDO}" -gt 0 ]; then
 	#Podemos correr sudo
-	#Instalar Package Control https://sublime.wbond.net/installation
-	echo -e "\e[7m*** Installing Package Control (check https://sublime.wbond.net/ for more awesomeness)...\e[0m"
+	#Instalar Package Control https://packagecontrol.io/installation
+	echo -e "\e[7m*** Installing Package Control (check https://packagecontrol.io/ for more awesomeness)...\e[0m"
 	sudo -u "$SUDO_USER" mkdir -p "$USER_HOME/.config/sublime-text-3/Installed Packages"
-	sudo -u "$SUDO_USER" wget -O "$USER_HOME/.config/sublime-text-3/Installed Packages/Package Control.sublime-package" "https://sublime.wbond.net/Package%20Control.sublime-package"
+	sudo -u "$SUDO_USER" wget -O "$USER_HOME/.config/sublime-text-3/Installed Packages/Package Control.sublime-package" "https://packagecontrol.io/Package%20Control.sublime-package"
 else
 	#No podemos correr sudo
 	echo ''
