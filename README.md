@@ -1,4 +1,4 @@
-Sublime Text linux installer
+Sublime Text Linux Installer
 =============================
 
 A *really* simple bash installer for Sublime Text, to deploy it (install/upgrade) on Linux.
