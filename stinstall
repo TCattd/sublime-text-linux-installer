@@ -1,0 +1,137 @@
+#!/bin/bash
+
+# Sublime Text Linux bash installer
+# Created by esteban@attitude.cl
+# Licensed under The MIT License (MIT)
+
+# The MIT License (MIT)
+# Copyright (c) 2014 Esteban Cuevas (esteban@attitude.cl)
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+# Usage:
+#	chmod +x ./stinstall && sudo ./stinstall
+# You can upgrade an installation made by this same script, using this
+# very same script too ;)
+
+# URL to find in the downloads page
+STDOWNLOADURLLIKE="https://download.sublimetext.com/sublime_text_build_"
+
+# Downloads URL
+STURLTOCHECK="`wget -qO- https://www.sublimetext.com/4`"
+
+# User's home folder (https://stackoverflow.com/questions/7358611/bash-get-users-home-directory-when-they-run-a-script-as-root)
+USER_HOME=$(getent passwd $SUDO_USER | cut -d: -f6)
+
+echo -e "\e[7m*** Sublime Text batch installer/upgrader\e[0m"
+
+# Check system arch (64 or 32)
+if [ "i686" = `uname -m` ]; then
+	# https://download.sublimetext.com/sublime_text_build_4102_x32.tar.xz
+	echo -e "\e[7m*** System x86 detected.\e[0m"
+	#URLS="`grep -Po '(?<=href=").*?(?=">)' <<<"$STURLTOCHECK"`"
+	URL="`grep -Po '(?<=href="https://download.sublimetext.com/sublime_text_build_)(.*?)(\w+x32.tar.xz)(?=">)' <<<"$STURLTOCHECK"`"
+elif [ "x86_64" = `uname -m` ]; then
+	# https://download.sublimetext.com/sublime_text_build_4102_x64.tar.xz
+	echo -e "\e[7m*** System x86_64 detected.\e[0m"
+	URL="`grep -Po '(?<=href="https://download.sublimetext.com/sublime_text_build_)(.*?)(\w+x64.tar.xz)(?=">)' <<<"$STURLTOCHECK"`"
+fi
+
+# File name and complete URL
+THEFILE="sublime_text_build_$URL"
+THEDOWNLOADURL="$STDOWNLOADURLLIKE$URL"
+
+echo -e "\e[7m*** I will download and install $THEDOWNLOADURL for you :)\e[0m"
+
+# Install Sublime Text
+echo -e "\e[7m*** Creating temp location on /var/cache/...\e[0m"
+mkdir -p /var/cache/sublime-text
+cd /var/cache/sublime-text
+
+# flash-installer like
+APT_PROXIES=$(apt-config shell http_proxy Acquire::http::Proxy https_proxy Acquire::https::Proxy ftp_proxy Acquire::ftp::Proxy)
+if [ -n "$APT_PROXIES" ]; then
+	eval export $APT_PROXIES
+fi
+
+# Download the latest build
+echo -e "\e[7m*** Downloading file to temp location...\e[0m"
+# https://unix.stackexchange.com/questions/37507/what-does-do-here
+:> wgetrc
+echo "noclobber = off" >> wgetrc
+echo "dir_prefix = ." >> wgetrc
+echo "dirstruct = off" >> wgetrc
+echo "verbose = on" >> wgetrc
+echo "progress = bar:default" >> wgetrc
+echo "tries = 3" >> wgetrc
+WGETRC=wgetrc wget --continue -O "$THEFILE" "$THEDOWNLOADURL" \
+	|| echo -e "\e[7m***Download failed.\e[0m"
+	rm -f wgetrc
+echo -e "\e[7m*** Download completed.\e[0m"
+
+echo -e "\e[7m*** Unpacking files on temp location...\e[0m"
+tar xvf "$THEFILE" || echo -e "\e[7m*** Cannot unpack downloaded file.\e[0m"
+
+echo -e "\e[7m*** Installing Sublime Text into /opt/sublime_text/\e[0m"
+mkdir -p /opt/sublime_text/
+cp -rf "/var/cache/sublime-text/sublime_text/"* /opt/sublime_text/
+
+echo -e "\e[7m*** Creating symlinks to /usr/bin/subl\e[0m"
+ln -sf /opt/sublime_text/sublime_text /usr/bin/subl
+
+echo -e "\e[7m*** Creating symlinks for icons on /usr/share/icons/hicolor/...\e[0m"
+ln -sf /opt/sublime_text/Icon/128x128/sublime-text.png /usr/share/icons/hicolor/128x128/apps/sublime-text.png
+ln -sf /opt/sublime_text/Icon/256x256/sublime-text.png /usr/share/icons/hicolor/256x256/apps/sublime-text.png
+gtk-update-icon-cache /usr/share/icons/hicolor
+
+echo -e "\e[7m*** Cleaning up temp unpacked files...\e[0m"
+rm -rf "/var/cache/sublime-text/sublime_text/"
+rm -rf "/var/cache/sublime-text/"*.bz2
+
+# Make a .desktop file
+echo -e "\e[7m*** Creating .desktop file (for easy launch and associate to Sublime Text)...\e[0m"
+echo "[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Sublime Text
+GenericName=Text Editor
+Comment=Sophisticated text editor for code, markup and prose
+#Exec=/opt/sublime_text/subl %F
+Exec=subl %F
+Terminal=false
+MimeType=text/plain;text/x-chdr;text/x-csrc;text/x-c++hdr;text/x-c++src;text/x-java;text/x-dsrc;text/x-pascal;text/x-perl;text/x-python;application/x-php;application/x-httpd-php3;application/x-httpd-php4;application/x-httpd-php5;application/x-httpd-php7;application/xml;text/html;text/css;text/x-sql;text/x-diff;x-directory/normal;inode/directory;
+Icon=sublime-text
+Categories=TextEditor;Development;
+StartupNotify=true
+Actions=Window;Document;
+
+[Desktop Action Window]
+Name=New Window
+Exec=/opt/sublime_text/sublime_text -n
+OnlyShowIn=Unity;
+
+[Desktop Action Document]
+Name=New File
+Exec=/opt/sublime_text/sublime_text --command new_file
+OnlyShowIn=Unity;" > /usr/share/applications/"Sublime Text.desktop"
+
+echo -e "\e[7m*** That's all. Have fun Sublime Texting ;)\e[0m"
+
+exit 0
+EOF
