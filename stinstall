@@ -41,16 +41,23 @@ USER_HOME=$(getent passwd $SUDO_USER | cut -d: -f6)
 
 echo -e "\e[7m*** Sublime Text batch installer/upgrader\e[0m"
 
-# Check system arch (64 or 32)
-if [ "i686" = `uname -m` ]; then
-	# https://download.sublimetext.com/sublime_text_build_4102_x32.tar.xz
-	echo -e "\e[7m*** System x86 detected.\e[0m"
-	#URLS="`grep -Po '(?<=href=").*?(?=">)' <<<"$STURLTOCHECK"`"
-	URL="`grep -Po '(?<=href="https://download.sublimetext.com/sublime_text_build_)(.*?)(\w+x32.tar.xz)(?=">)' <<<"$STURLTOCHECK"`"
-elif [ "x86_64" = `uname -m` ]; then
-	# https://download.sublimetext.com/sublime_text_build_4102_x64.tar.xz
-	echo -e "\e[7m*** System x86_64 detected.\e[0m"
+# Check system arch
+arch=$(uname -i)
+if [[ $arch == x86_64* ]]; then
+	# URL like: https://download.sublimetext.com/sublime_text_build_4107_x64.tar.xz
+	echo -e "\e[7m*** x64 detected.\e[0m"
+
 	URL="`grep -Po '(?<=href="https://download.sublimetext.com/sublime_text_build_)(.*?)(\w+x64.tar.xz)(?=">)' <<<"$STURLTOCHECK"`"
+elif [[ $arch == i*86 ]]; then
+	# URL like: https://download.sublimetext.com/sublime_text_build_4107_x64.tar.xz
+	echo -e "\e[7m*** x32 detected.\e[0m"
+
+	URL="`grep -Po '(?<=href="https://download.sublimetext.com/sublime_text_build_)(.*?)(\w+x64.tar.xz)(?=">)' <<<"$STURLTOCHECK"`"
+elif  [[ $arch == arm* ]] || [[ $arch = aarch64 ]]; then
+	# URL like: https://download.sublimetext.com/sublime_text_build_4107_arm64.tar.xz
+	echo -e "\e[7m*** ARM detected.\e[0m"
+
+	URL="`grep -Po '(?<=href="https://download.sublimetext.com/sublime_text_build_)(.*?)(\w+arm64.tar.xz)(?=">)' <<<"$STURLTOCHECK"`"
 fi
 
 # File name and complete URL
